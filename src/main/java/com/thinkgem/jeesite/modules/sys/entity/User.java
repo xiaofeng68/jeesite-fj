@@ -53,6 +53,8 @@ public class User extends DataEntity<User> {
 	private Role role;	// 根据角色查询用户条件
 	
 	private List<Role> roleList = Lists.newArrayList(); // 拥有角色列表
+	
+	private User daixiu;	// 待修
 
 	public User() {
 		super();
@@ -316,7 +318,14 @@ public class User extends DataEntity<User> {
 	public static boolean isAdmin(String id){
 		return id != null && "1".equals(id);
 	}
-	
+	public User getDaixiu() {
+		return daixiu;
+	}
+
+	public void setDaixiu(User daixiu) {
+		this.daixiu = daixiu;
+	}
+
 	@Override
 	public String toString() {
 		return id;

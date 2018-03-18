@@ -54,6 +54,11 @@ public class Global {
 	public static final String TRUE = "true";
 	public static final String FALSE = "false";
 	
+	/***
+	 * 当前用户
+	 */
+	public static final String CURRENT_USER = "system_current_user";
+	
 	/**
 	 * 上传文件基础虚拟路径
 	 */

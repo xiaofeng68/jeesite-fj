@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.fojiao.dao.FjBaoshuTjDao">
+    
+	<sql id="fjBaoshuTjColumns">
+		a.protype AS "protype",
+		a.create_by AS "createBy.id",
+		a.office_id AS "office.id",
+		a.seq AS "seq",
+		a.nums AS "nums",
+		o3.name AS "office.name"
+	</sql>
+	
+	<sql id="fjBaoshuTjJoins">
+		LEFT JOIN sys_office o3 ON o3.id = a.office_id
+	</sql>
+    
+	<select id="get" resultType="FjBaoshuTj">
+		SELECT 
+			<include refid="fjBaoshuTjColumns"/>
+		FROM fj_baoshu_tj a
+		<include refid="fjBaoshuTjJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FjBaoshuTj">
+		SELECT 
+			<include refid="fjBaoshuTjColumns"/>
+		FROM fj_baoshu_tj a
+		<include refid="fjBaoshuTjJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FjBaoshuTj">
+		SELECT 
+			<include refid="fjBaoshuTjColumns"/>
+		FROM fj_baoshu_tj a
+		<include refid="fjBaoshuTjJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fj_baoshu_tj(
+			protype,
+			create_by,
+			office_id,
+			seq,
+			nums
+		) VALUES (
+			#{protype},
+			#{createBy.id},
+			#{office.id},
+			#{seq},
+			#{nums}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fj_baoshu_tj SET 	
+			protype = #{protype},
+			office_id = #{office.id},
+			seq = #{seq},
+			nums = #{nums}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fj_baoshu_tj
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

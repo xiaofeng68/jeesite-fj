@@ -101,7 +101,12 @@
     	ou.id AS "office.primaryPerson.id",
     	ou.name AS "office.primaryPerson.name",
     	ou2.id AS "office.deputyPerson.id",
-    	ou2.name AS "office.deputyPerson.name"<!-- ,
+    	ou2.name AS "office.deputyPerson.name",
+    	<!-- 增加待修 -->
+		a.daixiu as "daixiu.id",
+		ou3.name as "daixiu.name",
+		ou3.login_name as "daixiu.loginName"
+    	<!-- ,
         r.id AS "roleList.id",
         r.office_id AS "roleList.office.id",
         r.name AS "roleList.name",
@@ -118,7 +123,10 @@
 		LEFT JOIN sys_user cu ON cu.id = c.primary_person
 		LEFT JOIN sys_user cu2 ON cu2.id = c.deputy_person
 		LEFT JOIN sys_user ou ON ou.id = o.primary_person
-		LEFT JOIN sys_user ou2 ON ou2.id = o.deputy_person<!-- 
+		LEFT JOIN sys_user ou2 ON ou2.id = o.deputy_person
+		<!-- 增加待修 -->
+		LEFT JOIN SYS_USER ou3 on ou3.id = a.daixiu
+		<!-- 
 		LEFT JOIN sys_user_role ur ON ur.user_id = a.id
         LEFT JOIN sys_role r ON r.id = ur.role_id -->
     </sql>
@@ -244,7 +252,8 @@
 			remarks, 
 			login_flag, 
 			photo, 
-			del_flag
+			del_flag,
+			daixiu
 		) VALUES (
 			#{id}, 
 			#{company.id}, 
@@ -264,7 +273,8 @@
 			#{remarks}, 
 			#{loginFlag}, 
 			#{photo}, 
-			#{delFlag}
+			#{delFlag},
+			#{daixiu.id}
 		)
 	</insert>
 	
@@ -285,7 +295,8 @@
 			update_date = #{updateDate}, 
 			remarks = #{remarks},
 			login_flag = #{loginFlag},
-			photo = #{photo}
+			photo = #{photo},
+			daixiu=#{daixiu.id}
 		WHERE id = #{id}
 	</update>
 	

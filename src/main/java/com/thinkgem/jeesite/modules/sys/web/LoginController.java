@@ -183,6 +183,7 @@ public class LoginController extends BaseController{
 ////			request.getSession().setAttribute("aaa", "aa");
 ////		}
 //		System.out.println("==========================b");
+		request.getSession().setAttribute(Global.CURRENT_USER, UserUtils.getUser());
 		return "modules/sys/sysIndex";
 	}
 	

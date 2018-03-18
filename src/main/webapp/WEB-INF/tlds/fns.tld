@@ -252,4 +252,12 @@
     <function-signature>java.lang.String getSettingContent(java.lang.String)</function-signature>
     <example>${fns:getSettingContent(code)}</example>  
   </function>
+  <!-- BaoShuUtils -->
+  <function>
+    <description>获取报数统计</description>
+    <name>getUserBaoshu</name>
+    <function-class>com.thinkgem.jeesite.modules.sys.utils.BaoShuUtils</function-class>
+    <function-signature>java.util.List getUserBaoshu()</function-signature>
+    <example>${fns:getUserBaoshu()}</example>  
+  </function>
 </taglib>

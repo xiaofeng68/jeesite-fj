@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.fojiao.dao.FjBaoshuDao">
+    
+	<sql id="fjBaoshuColumns">
+		a.id AS "id",
+		a.protype AS "protype",
+		a.num AS "num",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate"
+	</sql>
+	
+	<sql id="fjBaoshuJoins">
+	</sql>
+    
+	<select id="get" resultType="FjBaoshu">
+		SELECT 
+			<include refid="fjBaoshuColumns"/>
+		FROM fj_baoshu a
+		<include refid="fjBaoshuJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="FjBaoshu">
+		SELECT 
+			<include refid="fjBaoshuColumns"/>
+		FROM fj_baoshu a
+		<include refid="fjBaoshuJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="FjBaoshu">
+		SELECT 
+			<include refid="fjBaoshuColumns"/>
+		FROM fj_baoshu a
+		<include refid="fjBaoshuJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fj_baoshu(
+			protype,
+			num,
+			update_by,
+			update_date,
+			create_by,
+			create_date,
+			office_id
+		) VALUES (
+			#{protype},
+			#{num},
+			#{updateBy.id},
+			#{updateDate},
+			#{createBy.id},
+			#{createDate},
+			#{createBy.office.id}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE fj_baoshu SET 	
+			protype = #{protype},
+			num = #{num},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM fj_baoshu
+		WHERE id = #{id}
+	</update>
+	<delete id="deleteByFjBaoshu">
+		delete from fj_baoshu where create_by=#{0} and create_date like CONCAT('%', #{1}, '%')  
+	</delete>
+	<select id="getBaoshuTj" resultType="java.util.Map">
+		select d.label,d.value,t.* from fj_baoshu_tj t right join sys_dict d  on t.protype = d.value  and t.create_by=#{userId}
+		where d.type='PROTYPE' 
+	</select>
+	<!-- 查询时间段内的用户统计 -->
+	<select id="getBaoShuByTime" resultType="java.util.Map">
+		select  protype ,sum(num) nums from fj_baoshu 
+		<where>
+		and create_date like #{today}"%"
+		and create_by =#{userId}
+		</where>
+		group by protype 
+	</select>
+	<select id="getBaoShuNum" resultType="java.util.Map">
+		select office_id,protype,create_by,sum(num) nums from fj_baoshu
+		<where>
+		<if test="id!=null and id!=''">
+			and office_id = #{id}
+		</if>
+		</where> 
+		group by office_id,protype,create_by
+		order by office_id,protype asc ,nums desc
+	</select>
+	<update id="saveBaoShuTj">
+		insert into fj_baoshu_tj(seq,nums,protype,create_by,office_id) value(#{seq},#{nums},#{protype},#{create_by},#{office_id}) on DUPLICATE  key update seq=#{seq},nums=#{nums} 
+	</update>
+	<!-- 班级统计 -->
+	<select id="getClassStatics" resultType="java.util.Map">
+		select t3.name,t1.office_id,t1.allnums,t2.nums,t1.allnums-t2.nums mnums from (
+		select office_id,count(1) allnums from sys_user group by office_id
+		) t1,
+		(
+		select office_id,count(1) nums from (
+		select office_id, create_by from fj_baoshu 
+		where create_date like CONCAT('%', #{0}, '%')  
+		group by office_id
+		) y
+		) t2, sys_office t3
+		where t1.office_id = t2.office_id and t1.office_id=t3.id
+	</select>
+	<select id="noDetailStatics" resultType="java.util.Map">
+		select id,name,login_name from sys_user where id not in(
+		select DISTINCT create_by from fj_baoshu where create_date like CONCAT('%', #{0}, '%')  
+		)
+	</select>
+	<select id="noDaysDetailStatics" resultType="java.util.Map">
+		select id,name,mobile from sys_user where id not in(
+		select DISTINCT create_by from fj_baoshu where create_date &gt; #{0} 
+		)
+	</select>
+</mapper>

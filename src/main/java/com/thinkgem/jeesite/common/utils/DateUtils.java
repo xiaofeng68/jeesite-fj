@@ -4,6 +4,7 @@
 package com.thinkgem.jeesite.common.utils;
 
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -169,7 +170,134 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 		long afterTime = after.getTime();
 		return (afterTime - beforeTime) / (1000 * 60 * 60 * 24);
 	}
-	
+	/**
+	 * 返回给定时间所在的天、星期、月、季、年的起止时间
+	 * @param date		开始时间
+	 * @param mode		类型：day/week/month/season/year
+	 * @return			时间数组：[0]开始时间;[1]结束时间;
+	 */
+	public static Date[] getBegainAndEndDate(Date date, String mode) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		Date begin = new Date();
+		Date end = new Date();
+		if (mode == null || mode.equalsIgnoreCase("日")
+				|| mode.equalsIgnoreCase("day")) {
+			calendar.set(Calendar.HOUR_OF_DAY, 0);
+			calendar.set(Calendar.MINUTE, 0);
+			calendar.set(Calendar.SECOND, 0);
+			calendar.set(Calendar.MILLISECOND, 0);
+			begin = calendar.getTime();
+			calendar.set(Calendar.HOUR_OF_DAY, 23);
+			calendar.set(Calendar.MINUTE, 59);
+			calendar.set(Calendar.SECOND, 59);
+			calendar.set(Calendar.MILLISECOND, 999);
+			end = calendar.getTime();
+		}else if("分".equals(mode) ||"minute".equalsIgnoreCase(mode)){
+			calendar.add(Calendar.MINUTE, -30);
+			begin = calendar.getTime();
+			calendar.add(Calendar.MINUTE, 60);
+			end = calendar.getTime();
+		} else if (mode.equalsIgnoreCase("周") || mode.equalsIgnoreCase("week")) {
+			calendar.setFirstDayOfWeek(Calendar.MONDAY);
+			calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+			calendar.set(Calendar.HOUR_OF_DAY, 0);
+			calendar.set(Calendar.MINUTE, 0);
+			calendar.set(Calendar.SECOND, 0);
+			calendar.set(Calendar.MILLISECOND, 0);
+			begin = calendar.getTime();
+			calendar.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+			calendar.add(Calendar.DAY_OF_WEEK, 1);
+			calendar.set(Calendar.HOUR_OF_DAY, 23);
+			calendar.set(Calendar.MINUTE, 59);
+			calendar.set(Calendar.SECOND, 59);
+			calendar.set(Calendar.MILLISECOND, 999);
+			end = calendar.getTime();
+		} else if (mode.equalsIgnoreCase("月") || mode.equalsIgnoreCase("month")
+				|| mode.equalsIgnoreCase("0")) {
+			calendar.set(Calendar.DAY_OF_MONTH, 1);
+			calendar.set(Calendar.HOUR_OF_DAY, 0);
+			calendar.set(Calendar.MINUTE, 0);
+			calendar.set(Calendar.SECOND, 0);
+			calendar.set(Calendar.MILLISECOND, 0);
+			begin = calendar.getTime();
+			calendar.set(Calendar.DAY_OF_MONTH,
+					calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+			calendar.set(Calendar.HOUR_OF_DAY, 23);
+			calendar.set(Calendar.MINUTE, 59);
+			calendar.set(Calendar.SECOND, 59);
+			calendar.set(Calendar.MILLISECOND, 999);
+			end = calendar.getTime();
+		} else if (mode.equalsIgnoreCase("季")
+				|| mode.equalsIgnoreCase("season")) {
+			int month = calendar.get(Calendar.MONTH) + 1;
+			if (month % 3 == 0) {// 季度结束月 6(3,4,5)
+				calendar.set(Calendar.MONTH, month - 3);
+				calendar.set(Calendar.DAY_OF_MONTH, 1);
+				calendar.set(Calendar.HOUR_OF_DAY, 0);
+				calendar.set(Calendar.MINUTE, 0);
+				calendar.set(Calendar.SECOND, 0);
+				calendar.set(Calendar.MILLISECOND, 0);
+				begin = calendar.getTime();
+				calendar.set(Calendar.MONTH, month - 1);
+				calendar.set(Calendar.DAY_OF_MONTH,
+						calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+				calendar.set(Calendar.HOUR_OF_DAY, 23);
+				calendar.set(Calendar.MINUTE, 59);
+				calendar.set(Calendar.SECOND, 59);
+				calendar.set(Calendar.MILLISECOND, 999);
+				end = calendar.getTime();
+			} else if (month % 3 == 1) {// 季度起始月 4(3,4,5)
+				calendar.set(Calendar.MONTH, month - 1);
+				calendar.set(Calendar.DAY_OF_MONTH, 1);
+				calendar.set(Calendar.HOUR_OF_DAY, 0);
+				calendar.set(Calendar.MINUTE, 0);
+				calendar.set(Calendar.SECOND, 0);
+				calendar.set(Calendar.MILLISECOND, 0);
+				begin = calendar.getTime();
+				calendar.set(Calendar.MONTH, month + 1);
+				calendar.set(Calendar.DAY_OF_MONTH,
+						calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+				calendar.set(Calendar.HOUR_OF_DAY, 23);
+				calendar.set(Calendar.MINUTE, 59);
+				calendar.set(Calendar.SECOND, 59);
+				calendar.set(Calendar.MILLISECOND, 999);
+				end = calendar.getTime();
+			} else if (month % 3 == 2) {// 季度中间月 5(3,4,5)
+				calendar.set(Calendar.MONTH, month - 2);
+				calendar.set(Calendar.DAY_OF_MONTH, 1);
+				calendar.set(Calendar.HOUR_OF_DAY, 0);
+				calendar.set(Calendar.MINUTE, 0);
+				calendar.set(Calendar.SECOND, 0);
+				calendar.set(Calendar.MILLISECOND, 0);
+				begin = calendar.getTime();
+				calendar.set(Calendar.MONTH, month);
+				calendar.set(Calendar.DAY_OF_MONTH,
+						calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+				calendar.set(Calendar.HOUR_OF_DAY, 23);
+				calendar.set(Calendar.MINUTE, 59);
+				calendar.set(Calendar.SECOND, 59);
+				calendar.set(Calendar.MILLISECOND, 999);
+				end = calendar.getTime();
+			}
+		} else if (mode.equalsIgnoreCase("年") || mode.equalsIgnoreCase("year")
+				|| mode.equalsIgnoreCase("1")) {
+			calendar.set(Calendar.DAY_OF_YEAR, 1);
+			calendar.set(Calendar.HOUR_OF_DAY, 0);
+			calendar.set(Calendar.MINUTE, 0);
+			calendar.set(Calendar.SECOND, 0);
+			calendar.set(Calendar.MILLISECOND, 0);
+			begin = calendar.getTime();
+			calendar.set(Calendar.DAY_OF_YEAR,
+					calendar.getActualMaximum(Calendar.DAY_OF_YEAR));
+			calendar.set(Calendar.HOUR_OF_DAY, 23);
+			calendar.set(Calendar.MINUTE, 59);
+			calendar.set(Calendar.SECOND, 59);
+			calendar.set(Calendar.MILLISECOND, 999);
+			end = calendar.getTime();
+		}
+		return new Date[] { begin, end };
+	}
 	/**
 	 * @param args
 	 * @throws ParseException
