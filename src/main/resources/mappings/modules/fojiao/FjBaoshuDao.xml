@@ -145,4 +145,33 @@
 		select DISTINCT create_by from fj_baoshu where create_date &gt; #{0} 
 		)
 	</select>
+	<select id="getUserStatics" resultType="java.util.Map">
+		select t1.login_name,t1.name,t2.*  from sys_user t1,(
+		select create_by,protype,sum(num) num from fj_baoshu 
+		<where>
+			<if test="startDate!=null and startDate!=''">
+				and create_date &gt;= #{startDate}
+			</if>
+			<if test="endDate!=null and endDate!=''">
+				and create_date &lt;= #{endDate}
+			</if>
+		</where>
+		GROUP BY create_by,protype
+		) t2 where t1.id = t2.create_by
+	</select>
+	<select id="findPeopleData" resultType="java.util.Map">
+		SELECT t1.label,t2.protype,t2.nums from sys_dict t1,(
+		select protype,cast(sum(num) as char) nums from fj_baoshu 
+		<where>
+			and create_by=#{createBy.id}
+			<if test="startDate!=null and startDate!=''">
+				and create_date &gt;= #{startDate}
+			</if>
+			<if test="endDate!=null and endDate!=''">
+				and create_date &lt;= #{endDate}
+			</if>
+		</where>
+		GROUP BY protype
+		) t2 where t1.value = t2.protype and t1.type ='PROTYPE'
+	</select>
 </mapper>

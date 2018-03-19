@@ -367,5 +367,12 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     	result.append(val.substring(1));
     	return result.toString();
     }
-    
+    public static int changeObject2Int(Object obj) {
+    	if(obj==null) return 0;
+    	try {
+			return Integer.parseInt(obj.toString());
+		} catch (Exception e) {
+			return 0;
+		}
+    }
 }

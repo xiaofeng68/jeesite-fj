@@ -64,4 +64,18 @@ public interface FjBaoshuDao extends CrudDao<FjBaoshu> {
 	 * @return
 	 */
 	List<Map<String,Object>> noDaysDetailStatics(String date);
+	
+	/**
+	 * 查询所有用户统计
+	 * @param fjBaoshu
+	 * @return
+	 */
+	List<Map<String,Object>> getUserStatics(FjBaoshu fjBaoshu );
+	
+	/**
+	 * 查询个人历史数据
+	 * @param fjBaoshu
+	 * @return
+	 */
+	List<Map<String,Object>> findPeopleData(FjBaoshu fjBaoshu );
 }

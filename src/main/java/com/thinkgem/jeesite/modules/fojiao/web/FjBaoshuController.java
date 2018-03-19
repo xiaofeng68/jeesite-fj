@@ -11,6 +11,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +32,9 @@ import com.thinkgem.jeesite.common.utils.excel.ExportExcel;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.modules.fojiao.entity.FjBaoshu;
 import com.thinkgem.jeesite.modules.fojiao.service.FjBaoshuService;
+import com.thinkgem.jeesite.modules.sys.entity.Dict;
 import com.thinkgem.jeesite.modules.sys.entity.User;
-import com.thinkgem.jeesite.modules.sys.utils.BaoShuUtils;
+import com.thinkgem.jeesite.modules.sys.utils.DictUtils;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
 /**
@@ -61,13 +64,52 @@ public class FjBaoshuController extends BaseController {
 	@RequiresPermissions("fojiao:fjBaoshu:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(FjBaoshu fjBaoshu, HttpServletRequest request, HttpServletResponse response, Model model) {
+		if(fjBaoshu.getCreateDate()==null) {
+			fjBaoshu.setCreateDate(new Date());
+		}
+		model.addAttribute("today",DateUtils.formatDate(fjBaoshu.getCreateDate()));
 		Date now = new Date();
 		Date date = DateUtils.getBegainAndEndDate(now, "week")[0];
 		model.addAttribute("minDate", DateUtils.formatDate(date));
 		model.addAttribute("maxDate", DateUtils.formatDate(now));
+		
+		model.addAttribute("list", fjBaoshuService.getUserBaoshu(fjBaoshu));
 		return "modules/fojiao/fjBaoshuList";
 	}
-	
+	@RequiresPermissions("fojiao:fjBaoshu:view")
+	@RequestMapping(value = "userList")
+	public String userList(FjBaoshu fjBaoshu, HttpServletRequest request, HttpServletResponse response, Model model) {
+		String today = DateUtils.formatDate(new Date());
+		if(StringUtils.isEmpty(fjBaoshu.getStartDate())) {
+			fjBaoshu.setStartDate(today);
+		}
+		if(StringUtils.isEmpty(fjBaoshu.getEndDate())) {
+			fjBaoshu.setEndDate(today);
+		}
+		model.addAttribute("today",today);
+		model.addAttribute("list", fjBaoshuService.getUserStatics(fjBaoshu));
+		return "modules/fojiao/fjUserList";
+	}
+	@RequiresPermissions("fojiao:fjBaoshu:view")
+	@RequestMapping(value = "people")
+	public String people(FjBaoshu fjBaoshu, HttpServletRequest request, HttpServletResponse response, Model model) {
+		String today = DateUtils.formatDate(new Date());
+		if(StringUtils.isEmpty(fjBaoshu.getStartDate())) {
+			fjBaoshu.setStartDate(today);
+		}
+		if(StringUtils.isEmpty(fjBaoshu.getEndDate())) {
+			fjBaoshu.setEndDate(today);
+		}
+		
+		if(fjBaoshu.getCreateBy()==null) {
+			fjBaoshu.setCreateBy(UserUtils.getUser());
+		}
+		model.addAttribute("startDate",fjBaoshu.getStartDate());
+		model.addAttribute("endDate",fjBaoshu.getEndDate());
+		model.addAttribute("list", fjBaoshuService.findPeopleData(fjBaoshu));
+		return "modules/fojiao/fjPeople";
+	}
+
 	@RequiresPermissions("fojiao:fjBaoshu:view")
 	@RequestMapping(value = "classStatic")
 	public String classStatic(FjBaoshu fjBaoshu, HttpServletRequest request, HttpServletResponse response, Model model) {
@@ -161,7 +203,7 @@ public class FjBaoshuController extends BaseController {
 			ee.addCell(row, 2, "已完成数量");
 			ee.addCell(row, 3, "班内排名");
 			
-			List<Map<String,Object>> list = BaoShuUtils.getUserBaoshu();
+			List<Map<String,Object>> list = fjBaoshuService.getUserBaoshu(fjBaoshu);
 			for(Map<String,Object> obj : list) {
 				row = ee.addRow();
 				ee.addCell(row, 0, obj.get("label"));
@@ -176,4 +218,54 @@ public class FjBaoshuController extends BaseController {
 		}
 		return "redirect:" + Global.getAdminPath()+ "/fojiao/fjBaoshuList?repage";
     }
+	@RequiresPermissions("sys:user:view")
+    @RequestMapping(value = "exportUserStatiscs", method=RequestMethod.POST)
+    public String exportUserStatiscsFile(FjBaoshu fjBaoshu, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
+		String today = DateUtils.formatDate(new Date());
+		if(StringUtils.isEmpty(fjBaoshu.getStartDate())) {
+			fjBaoshu.setStartDate(today);
+		}
+		if(StringUtils.isEmpty(fjBaoshu.getEndDate())) {
+			fjBaoshu.setEndDate(today);
+		}
+		List<Map<String,Object>> list = fjBaoshuService.getUserStatics(fjBaoshu);
+		List<Dict> dicList = DictUtils.getDictList("PROTYPE");
+		try {
+			String fileName = "用户统计.xlsx";
+	    	List<String> headerList = Lists.newArrayList();
+	    	headerList.add("共修编号");
+	    	headerList.add("共修昵称");
+	    	headerList.add("登陆名");
+			for (Dict dic : dicList) {
+				headerList.add(dic.getLabel());
+			}
+			ExportExcel ee = new ExportExcel(fileName, headerList);
+			Row row;
+			for(Map<String,Object> obj : list) {
+				row = ee.addRow();
+				if(obj.get("login_name")==null) {
+					CellStyle style = ee.addCell(row, 0, "合计").getCellStyle();
+					style.setAlignment(CellStyle.ALIGN_CENTER);  
+					style.setBorderBottom(CellStyle.BORDER_THIN);
+					style.setBottomBorderColor(IndexedColors.GREY_50_PERCENT.getIndex());
+					ee.addMergedCell(row, 0, 2);
+				}else {
+				ee.addCell(row, 0, obj.get("login_name"));
+				ee.addCell(row, 1, obj.get("name"));
+				ee.addCell(row, 2, obj.get("name"));
+				}
+				int index=3;
+				for(Dict dic : dicList) {
+					ee.addCell(row, index, obj.get(dic.getValue()));
+					index++;
+				}
+			}
+			
+	    	ee.write(response, fileName).dispose();
+    		return null;
+		} catch (Exception e) {
+			addMessage(redirectAttributes, "导出报数统计！失败信息："+e.getMessage());
+		}
+		return "modules/fojiao/fjUserList";
+	}
 }

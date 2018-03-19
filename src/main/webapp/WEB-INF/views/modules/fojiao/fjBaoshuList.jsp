@@ -16,6 +16,10 @@
 			},{buttonsFocus:1});
 			top.$('.jbox-body .jbox-icon').css('top','55px');
 		});
+	 	$("#btnSearch").click(function(){
+	 		$("#inputForm").attr("action","${ctx}/fojiao/fjBaoshu/list");
+			$("#inputForm").submit();
+		});
 	}); 
 	function initBaoshu(){
 		//统计报数
@@ -44,7 +48,7 @@
 	<br />
 	<form:form id="inputForm" modelAttribute="fjBaoshu"
 		action="${ctx}/fojiao/fjBaoshu/save" method="post"
-		class="form-horizontal" >
+		class="form-horizontal" onsubmit="return initBaoshu();">
 		<input name="baoshuNum" id="baoshuNum" type="hidden"/>
 		<sys:message content="${message}" />
 		<table id="contentTable" class="table table-striped table-bordered table-condensed">
@@ -65,15 +69,15 @@
 			<td>
 				<input id="createDate" name="createDate" type="text"
 						readonly="readonly" maxlength="20" class="input-xlarge Wdate"
-						value="<fmt:formatDate value="${empty fjBaoshu.createDate?now:fjBaoshu.createDate}" pattern="yyyy-MM-dd"/>"
+						value="${today }"
 						onclick="WdatePicker({minDate:'${minDate}',maxDate:'${maxDate}',dateFmt:'yyyy-MM-dd',isShowClear:false});"
-						placeholder="请选择报数日期" />
+						placeholder="请选择报数日期"  />
 			</td>
 			<td><label class="control-label">代修日期：</label></td>
 			<td>
 				<input id="createDate" type="text"
 						readonly="readonly" maxlength="20" class="input-xlarge Wdate"
-						value="<fmt:formatDate value="${empty fjBaoshu.createDate?now:fjBaoshu.createDate}" pattern="yyyy-MM-dd"/>"
+						value="${today }"
 						onclick="WdatePicker({minDate:'${minDate}',maxDate:'${maxDate}',dateFmt:'yyyy-MM-dd',isShowClear:false});"
 						placeholder="请选择报数日期" />
 			</td>
@@ -84,7 +88,7 @@
 			<th><label class="control-label">已完成数量</label></th>
 			<th><label class="control-label">班内排名</label></th>
 		</tr>
-		<c:forEach items="${fns:getUserBaoshu()}" var="type">
+		<c:forEach items="${list}" var="type">
 		<tr>
 			<td><label class="control-label">${type.label }</label></td>
 			<td><input type="text" id="num_${type.value }" class="input-xlarge baoshutype" placeholder="请输入报数次数" value="${type.today }"/></td>
@@ -97,6 +101,8 @@
 			<shiro:hasPermission name="fojiao:fjBaoshu:edit">
 				<input id="btnSubmit" class="btn btn-primary" type="submit"
 					value="提交报数" />&nbsp;</shiro:hasPermission>
+				<input id="btnSearch" class="btn btn-primary" type="button"
+					value="查询" />
 			<input id="btnExport" class="btn btn-primary" type="button"
 					value="导出" />
 			</td>
