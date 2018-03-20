@@ -28,6 +28,7 @@ import com.thinkgem.jeesite.common.beanvalidator.BeanValidators;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.utils.DateUtils;
+import com.thinkgem.jeesite.common.utils.Json;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.utils.excel.ExportExcel;
 import com.thinkgem.jeesite.common.utils.excel.ImportExcel;
@@ -330,7 +331,23 @@ public class UserController extends BaseController {
 		model.addAttribute("user", user);
 		return "modules/sys/userModifyPwd";
 	}
-	
+	/**
+	 * 获取用户信息
+	 */
+	@RequestMapping(value = "getUserInfo")
+	@ResponseBody
+	public Json getUserInfo(String id, HttpServletRequest request) {
+		Json json = new Json();
+		try {
+			json.setObj(UserUtils.get(id));
+			json.setSuccess(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			json.setMsg("获取用户信息失败！！");
+			json.setSuccess(false);
+		}
+		return json;
+	}
 	@RequiresPermissions("user")
 	@ResponseBody
 	@RequestMapping(value = "treeData")

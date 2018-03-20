@@ -67,6 +67,9 @@ public class FjBaoshuController extends BaseController {
 		if(fjBaoshu.getCreateDate()==null) {
 			fjBaoshu.setCreateDate(new Date());
 		}
+		if(fjBaoshu.getCreateBy()==null) {
+			fjBaoshu.setCreateBy(UserUtils.getUser());
+		}
 		model.addAttribute("today",DateUtils.formatDate(fjBaoshu.getCreateDate()));
 		Date now = new Date();
 		Date date = DateUtils.getBegainAndEndDate(now, "week")[0];
@@ -268,4 +271,40 @@ public class FjBaoshuController extends BaseController {
 		}
 		return "modules/fojiao/fjUserList";
 	}
+	@RequiresPermissions("sys:user:view")
+    @RequestMapping(value = "exportPeopleData", method=RequestMethod.POST)
+    public String exportPeopleData(FjBaoshu fjBaoshu, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
+		try {
+			String today = DateUtils.formatDate(new Date());
+			if(StringUtils.isEmpty(fjBaoshu.getStartDate())) {
+				fjBaoshu.setStartDate(today);
+			}
+			if(StringUtils.isEmpty(fjBaoshu.getEndDate())) {
+				fjBaoshu.setEndDate(today);
+			}
+			
+			if(fjBaoshu.getCreateBy()==null) {
+				fjBaoshu.setCreateBy(UserUtils.getUser());
+			}
+			List<Map<String,Object>> list = fjBaoshuService.findPeopleData(fjBaoshu);
+			String fileName = fjBaoshu.getCreateBy().getName()+"的数据查询.xlsx";
+			List<String> headerList = Lists.newArrayList();
+				headerList.add("共修项目");
+				headerList.add("共修报数");
+			String title = fjBaoshu.getStartDate()+"至"+fjBaoshu.getEndDate()+"个人报数查询";
+			ExportExcel ee = new ExportExcel(title, headerList);
+			
+			Row row ;
+			for(Map<String,Object> obj : list) {
+				row = ee.addRow();
+				ee.addCell(row, 0, obj.get("label"));
+				ee.addCell(row, 1, obj.get("nums"));
+			}
+	    	ee.write(response, fileName).dispose();
+    		return null;
+		} catch (Exception e) {
+			addMessage(redirectAttributes, "导出失败！失败信息："+e.getMessage());
+		}
+		return "modules/fojiao/fjPeople";
+    }
 }

@@ -75,7 +75,7 @@
 					$("#${id}Name").val("");
                 }//</c:if>
 				if(typeof ${id}TreeselectCallBack == 'function'){
-					${id}TreeselectCallBack(v, h, f);
+					${id}TreeselectCallBack(v, h, f,ids.join(",").replace(/u_/ig,""));
 				}
 			}, loaded:function(h){
 				$(".jbox-content", top.document).css("overflow-y","hidden");

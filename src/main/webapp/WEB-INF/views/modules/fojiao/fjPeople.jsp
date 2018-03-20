@@ -20,11 +20,14 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/fojiao/fjBaoshu/people">个人统计</a></li>
+		<li class="active"><a href="${ctx}/fojiao/fjBaoshu/people">个人报数历史</a></li>
 	</ul>
 	<form:form id="searchForm" modelAttribute="fjBaoshuTj"
 		action="${ctx}/fojiao/fjBaoshu/people" method="post"
 		class="breadcrumb form-search">
+		<label>用户名：</label>
+		<sys:treeselect id="userId" name="createBy.id" value="${fjBaoshu.createBy.id}" labelName="createBy.name" labelValue="${fjBaoshu.createBy.name}" 
+				title="用户" url="/sys/user/treeData" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
 		<label>开始时间：</label>
 		<input id="startDate" name="startDate" type="text" readonly="readonly"
 			maxlength="20" class="input-small Wdate" value="${startDate }"

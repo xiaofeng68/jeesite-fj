@@ -21,6 +21,27 @@
 			$("#inputForm").submit();
 		});
 	}); 
+	function userIdTreeselectCallBack(v, h, f,ids){
+		//根据f对应的id查询对应的用户信息
+		 $.post('${ctx}//sys/user/getUserInfo', {
+             id:ids
+         }, function (result) {
+             if (result.success) {
+                var user = result.obj;
+                $("#userLogin").html(user.loginName);
+                if(user.daixiu){
+                	$("#daixiuName").html(user.daixiu.name);
+                    $("#daixiuLogin").html(user.daixiu.loginName);	
+                }else{
+                	$("#daixiuName").html("");
+                    $("#daixiuLogin").html("");	
+                }
+                
+             } else {
+                 alert(result.msg);
+             }
+         }, 'JSON');
+	}
 	function initBaoshu(){
 		//统计报数
 		var str = "";
@@ -54,15 +75,18 @@
 		<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<tr>
 			<td width="25%"><label class="control-label">共修师兄：</label></td>
-			<td width="25%"><label class="control-label">${system_current_user.name }</label></td>
+			<td width="25%">
+			<sys:treeselect id="userId" name="createBy.id" value="${fjBaoshu.createBy.id}" labelName="createBy.name" labelValue="${fjBaoshu.createBy.name}" 
+				title="用户" url="/sys/user/treeData" cssClass="input-small" allowClear="true" notAllowSelectParent="true" />
+			</td>
 			<td width="25%"><label class="control-label">代修师兄：</label></td>
-			<td width="25%"><label class="control-label">${system_current_user.daixiu.name }</label></td>
+			<td width="25%"><label class="control-label" id="daixiuName">${fjBaoshu.createBy.daixiu.name }</label></td>
 		</tr>
 		<tr>
 			<td><label class="control-label">共修编号：</label></td>
-			<td><label class="control-label">${system_current_user.loginName }</label></td>
+			<td><label class="control-label" id="userLogin">${fjBaoshu.createBy.loginName }</label></td>
 			<td><label class="control-label">代修编号：</label></td>
-			<td><label class="control-label">${system_current_user.daixiu.loginName }</label></td>
+			<td><label class="control-label" id="daixiuLogin">${fjBaoshu.createBy.daixiu.loginName }</label></td>
 		</tr>
 		<tr>
 			<td><label class="control-label">共修日期：</label></td>
