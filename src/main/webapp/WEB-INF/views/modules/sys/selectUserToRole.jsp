@@ -96,7 +96,7 @@
 <body>
 	<div id="assignRole" class="row-fluid span12">
 		<div class="span4" style="border-right: 1px solid #A8A8A8;">
-			<p>所在部门：</p>
+			<p>所在分群：</p>
 			<div id="officeTree" class="ztree"></div>
 		</div>
 		<div class="span3">

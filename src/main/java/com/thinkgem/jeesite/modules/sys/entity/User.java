@@ -29,8 +29,8 @@ import com.thinkgem.jeesite.common.utils.excel.fieldtype.RoleListType;
 public class User extends DataEntity<User> {
 
 	private static final long serialVersionUID = 1L;
-	private Office company;	// 归属公司
-	private Office office;	// 归属部门
+	private Office company;	// 归属群
+	private Office office;	// 归属分群
 	private String loginName;// 登录名
 	private String password;// 密码
 	private String no;		// 工号
@@ -55,6 +55,7 @@ public class User extends DataEntity<User> {
 	private List<Role> roleList = Lists.newArrayList(); // 拥有角色列表
 	
 	private User daixiu;	// 待修
+	private String daixiuName;
 
 	public User() {
 		super();
@@ -98,8 +99,8 @@ public class User extends DataEntity<User> {
 	}
 
 	@JsonIgnore
-	@NotNull(message="归属公司不能为空")
-	@ExcelField(title="归属公司", align=2, sort=20)
+	@NotNull(message="归属群不能为空")
+	@ExcelField(title="归属群", align=2, sort=20)
 	public Office getCompany() {
 		return company;
 	}
@@ -109,8 +110,8 @@ public class User extends DataEntity<User> {
 	}
 	
 	@JsonIgnore
-	@NotNull(message="归属部门不能为空")
-	@ExcelField(title="归属部门", align=2, sort=25)
+	@NotNull(message="归属分群不能为空")
+	@ExcelField(title="归属分群", align=2, sort=25)
 	public Office getOffice() {
 		return office;
 	}
@@ -318,6 +319,16 @@ public class User extends DataEntity<User> {
 	public static boolean isAdmin(String id){
 		return id != null && "1".equals(id);
 	}
+	
+	@ExcelField(title="代修师兄", align=2, sort=110)
+	public String getDaixiuName() {
+		return daixiu!=null?daixiu.getLoginName():"";
+	}
+
+	public void setDaixiuName(String daixiuName) {
+		this.daixiuName = daixiuName;
+	}
+	
 	public User getDaixiu() {
 		return daixiu;
 	}

@@ -41,13 +41,13 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">归属公司:</label>
+			<label class="control-label">归属群:</label>
 			<div class="controls">
 				<label class="lbl">${user.company.name}</label>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">归属部门:</label>
+			<label class="control-label">归属分群:</label>
 			<div class="controls">
 				<label class="lbl">${user.office.name}</label>
 			</div>

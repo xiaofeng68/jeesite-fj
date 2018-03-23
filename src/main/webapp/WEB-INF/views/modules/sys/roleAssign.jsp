@@ -32,7 +32,7 @@
 		<script type="text/javascript">
 			$("#assignButton").click(function(){
 				top.$.jBox.open("iframe:${ctx}/sys/role/usertorole?id=${role.id}", "分配角色",810,$(top.document).height()-240,{
-					buttons:{"确定分配":"ok", "清除已选":"clear", "关闭":true}, bottomText:"通过选择部门，然后为列出的人员分配角色。",submit:function(v, h, f){
+					buttons:{"确定分配":"ok", "清除已选":"clear", "关闭":true}, bottomText:"通过选择分群，然后为列出的人员分配角色。",submit:function(v, h, f){
 						var pre_ids = h.find("iframe")[0].contentWindow.pre_ids;
 						var ids = h.find("iframe")[0].contentWindow.ids;
 						//nodes = selectedTree.getSelectedNodes();
@@ -67,7 +67,7 @@
 		</script>
 	</div>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
-		<thead><tr><th>归属公司</th><th>归属部门</th><th>登录名</th><th>姓名</th><th>电话</th><th>手机</th><shiro:hasPermission name="sys:user:edit"><th>操作</th></shiro:hasPermission></tr></thead>
+		<thead><tr><th>归属群</th><th>归属分群</th><th>登录名</th><th>姓名</th><th>电话</th><th>手机</th><shiro:hasPermission name="sys:user:edit"><th>操作</th></shiro:hasPermission></tr></thead>
 		<tbody>
 		<c:forEach items="${userList}" var="user">
 			<tr>

@@ -142,7 +142,7 @@
 		</div>
 		<c:if test="${empty office.id}">
 			<div class="control-group">
-				<label class="control-label">快速添加下级部门:</label>
+				<label class="control-label">快速添加下级分群:</label>
 				<div class="controls">
 					<form:checkboxes path="childDeptList" items="${fns:getDictList('sys_office_common')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</div>

@@ -43,7 +43,7 @@
 			<label class="control-label">office_id：</label>
 			<div class="controls">
 				<sys:treeselect id="office" name="office.id" value="${fjBaoshuTj.office.id}" labelName="office.name" labelValue="${fjBaoshuTj.office.name}"
-					title="部门" url="/sys/office/treeData?type=2" cssClass="" allowClear="true" notAllowSelectParent="true"/>
+					title="分群" url="/sys/office/treeData?type=2" cssClass="" allowClear="true" notAllowSelectParent="true"/>
 			</div>
 		</div>
 		<div class="control-group">

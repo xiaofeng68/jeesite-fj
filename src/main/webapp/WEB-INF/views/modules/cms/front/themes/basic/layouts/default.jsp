@@ -50,7 +50,7 @@
     </div>
     <div class="footer1"><div class="footer2">
     <div class="foot-nav"><h2>关于我们</h2><ul>
-    <li><a href="view-e023e3a6e33044b091274d5f9fc3a320-ddee6edf129445fb839fbbaf629a2d89.html">公司简介</a></li>
+    <li><a href="view-e023e3a6e33044b091274d5f9fc3a320-ddee6edf129445fb839fbbaf629a2d89.html">群简介</a></li>
     <li><a href="view-e023e3a6e33044b091274d5f9fc3a320-03dda698f67342f280ed2e88ba3db705.html">加入我们</a></li></ul></div>
     <div class="foot-nav"><h2>服务支持</h2><ul>
     <li><a href="view-e023e3a6e33044b091274d5f9fc3a320-66711f3e8ecf416b85352804253a05ec.html">合作洽谈</a></li>

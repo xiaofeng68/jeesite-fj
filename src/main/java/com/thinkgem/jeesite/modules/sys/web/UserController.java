@@ -201,6 +201,9 @@ public class UserController extends BaseController {
 					if ("true".equals(checkLoginName("", user.getLoginName()))){
 						user.setPassword(SystemService.entryptPassword("123456"));
 						BeanValidators.validateWithException(validator, user);
+						if(!StringUtils.isEmpty(user.getDaixiuName())){
+							user.setDaixiu(UserUtils.getByLoginName(user.getDaixiuName()));
+						}
 						systemService.saveUser(user);
 						successNum++;
 					}else{

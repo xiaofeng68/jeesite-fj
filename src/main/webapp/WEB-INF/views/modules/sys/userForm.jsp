@@ -48,17 +48,17 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">归属公司:</label>
+			<label class="control-label">归属群:</label>
 			<div class="controls">
                 <sys:treeselect id="company" name="company.id" value="${user.company.id}" labelName="company.name" labelValue="${user.company.name}"
-					title="公司" url="/sys/office/treeData?type=1" cssClass="required"/>
+					title="群" url="/sys/office/treeData?type=1" cssClass="required"/>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">归属部门:</label>
+			<label class="control-label">归属分群:</label>
 			<div class="controls">
                 <sys:treeselect id="office" name="office.id" value="${user.office.id}" labelName="office.name" labelValue="${user.office.name}"
-					title="部门" url="/sys/office/treeData?type=2" cssClass="required" notAllowSelectParent="true"/>
+					title="分群" url="/sys/office/treeData?type=2" cssClass="required" notAllowSelectParent="true"/>
 			</div>
 		</div>
 		<div class="control-group">
