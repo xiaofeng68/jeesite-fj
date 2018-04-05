@@ -114,7 +114,7 @@ public class FjBaoshuService extends CrudService<FjBaoshuDao, FjBaoshu> {
 	}
 
 	public List<Map<String, Object>> getClassStatics(FjBaoshu fjBaoshu) {
-		return baoshuDao.getClassStatics(DateUtils.formatDate(fjBaoshu.getCreateDate()));
+		return baoshuDao.getClassStatics(fjBaoshu);
 	}
 
 	public List<Map<String, Object>> noDetailStatics(FjBaoshu fjBaoshu) {

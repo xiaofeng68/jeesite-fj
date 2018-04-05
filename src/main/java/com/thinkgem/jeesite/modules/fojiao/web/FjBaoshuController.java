@@ -119,9 +119,14 @@ public class FjBaoshuController extends BaseController {
 	@RequiresPermissions("fojiao:fjBaoshu:view")
 	@RequestMapping(value = "classStatic")
 	public String classStatic(FjBaoshu fjBaoshu, HttpServletRequest request, HttpServletResponse response, Model model) {
-		if(fjBaoshu.getCreateDate()==null) {
-			fjBaoshu.setCreateDate(new Date());
+		
+		if(StringUtils.isEmpty(fjBaoshu.getStartDate()) && StringUtils.isEmpty(fjBaoshu.getEndDate())) {
+			Date now = new Date();
+			Date[] dates = DateUtils.getBegainAndEndDate(now, "week");
+			fjBaoshu.setStartDate(DateUtils.formatDate(dates[0]));
+			fjBaoshu.setEndDate(DateUtils.formatDate(dates[1]));
 		}
+		
 		model.addAttribute("list", fjBaoshuService.getClassStatics(fjBaoshu));
 		return "modules/fojiao/fjBaoshuClassStatic";
 	}

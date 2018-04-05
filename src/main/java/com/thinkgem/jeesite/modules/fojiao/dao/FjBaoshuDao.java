@@ -50,7 +50,7 @@ public interface FjBaoshuDao extends CrudDao<FjBaoshu> {
 	 * @param date
 	 * @return
 	 */
-	List<Map<String,Object>> getClassStatics(String date);
+	List<Map<String,Object>> getClassStatics(FjBaoshu fjBaoshu);
 	
 	/**
 	 * 看未报数的人员清单

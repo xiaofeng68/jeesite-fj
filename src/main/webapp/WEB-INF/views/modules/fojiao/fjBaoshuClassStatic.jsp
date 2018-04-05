@@ -18,10 +18,17 @@
 		<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<tr>
 			<td colspan="2">
-				<label class="control-label">共修日期：</label>
-				<input id="createDate" name="createDate" type="text"
+				<label>开始日期：</label>
+				<input id="startDate" name="startDate" type="text"
 						readonly="readonly" maxlength="20" class="input-xlarge Wdate"
-						value="<fmt:formatDate value="${empty fjBaoshu.createDate?now:fjBaoshu.createDate}" pattern="yyyy-MM-dd"/>"
+						value="${fjBaoshu.startDate}"
+						onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"
+						placeholder="请选择报数日期" />
+						
+				<label>结束日期：</label>
+				<input id="endDate" name="endDate" type="text"
+						readonly="readonly" maxlength="20" class="input-xlarge Wdate"
+						value="${fjBaoshu.endDate}"
 						onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"
 						placeholder="请选择报数日期" />
 				<input id="btnSubmit" class="btn btn-primary" type="submit"

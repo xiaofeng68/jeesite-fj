@@ -130,7 +130,13 @@
 		(
 		select office_id,count(1) nums from (
 		select office_id, create_by from fj_baoshu 
-		where create_date like CONCAT('%', #{0}, '%')  
+		where 1=1
+		<if test="startDate!=null and startDate!=''">
+			and create_date &gt;= #{startDate}
+		</if>
+		<if test="endDate!=null and endDate!=''">
+			and create_date &lt;= #{endDate}
+		</if>
 		group by office_id
 		) y
 		) t2, sys_office t3
