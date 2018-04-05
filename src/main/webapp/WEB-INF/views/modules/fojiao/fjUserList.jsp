@@ -27,13 +27,13 @@
 		class="breadcrumb form-search">
 		<label>开始时间：</label>
 		<input id="startDate" name="startDate" type="text" readonly="readonly"
-			maxlength="20" class="input-xlarge Wdate" value="${today }"
+			maxlength="20" class="input-xlarge Wdate" value="${startDate }"
 			onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"
 			placeholder="请选择日期" />
 
 		<label>结束时间：</label>
 		<input id="endDate" name="endDate" type="text" readonly="readonly"
-			maxlength="20" class="input-xlarge Wdate" value="${today }"
+			maxlength="20" class="input-xlarge Wdate" value="${endDate }"
 			onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"
 			placeholder="请选择日期" />
 		<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询" />

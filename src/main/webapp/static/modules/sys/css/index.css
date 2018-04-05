@@ -3,7 +3,7 @@
 
 
 
-.web_index{ width:100%; height:400px; margin:10px auto 40px auto; background:url(../images/re_bg.jpg) no-repeat left top;}
+.web_index{ width:100%; height:400px; margin:10px auto 40px auto; background:url(../images/re_bg.jpg) no-repeat center;background-size: cover;}
 
 .web_index #login{ width:300px; text-align:right; margin:20px 50px 0 0; min-height:300px; height:310px; float:right; background:url(../images/sm_bg.png) no-repeat left top;"}
 

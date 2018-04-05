@@ -89,7 +89,7 @@
 			<td><label class="control-label" id="daixiuLogin">${fjBaoshu.createBy.daixiu.loginName }</label></td>
 		</tr>
 		<tr>
-			<td><label class="control-label">共修日期：</label></td>
+			<td><label class="control-label">报数日期：</label></td>
 			<td>
 				<input id="createDate" name="createDate" type="text"
 						readonly="readonly" maxlength="20" class="input-xlarge Wdate"
@@ -97,7 +97,7 @@
 						onclick="WdatePicker({minDate:'${minDate}',maxDate:'${maxDate}',dateFmt:'yyyy-MM-dd',isShowClear:false});"
 						placeholder="请选择报数日期"  />
 			</td>
-			<td><label class="control-label">代修日期：</label></td>
+			<td><label class="control-label">代报日期：</label></td>
 			<td>
 				<input id="createDate" type="text"
 						readonly="readonly" maxlength="20" class="input-xlarge Wdate"
@@ -108,7 +108,7 @@
 		</tr>
 		<tr>
 			<th><label class="control-label">共修项目</label></th>
-			<th><label class="control-label">当日共修报数</label></th>
+			<th><label class="control-label">共修报数</label></th>
 			<th><label class="control-label">已完成数量</label></th>
 			<th><label class="control-label">班内排名</label></th>
 		</tr>

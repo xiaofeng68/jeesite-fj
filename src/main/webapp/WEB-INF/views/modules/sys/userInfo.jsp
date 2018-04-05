@@ -53,9 +53,21 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">姓名:</label>
+			<label class="control-label">登陆昵称:</label>
+			<div class="controls">
+				<form:input path="loginName" htmlEscape="false" maxlength="50" class="required" readonly="true"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">法名:</label>
 			<div class="controls">
 				<form:input path="name" htmlEscape="false" maxlength="50" class="required" readonly="true"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">姓名:</label>
+			<div class="controls">
+				<form:input path="remarks" htmlEscape="false" maxlength="50" readonly="true"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -74,12 +86,6 @@
 			<label class="control-label">手机:</label>
 			<div class="controls">
 				<form:input path="mobile" htmlEscape="false" maxlength="50"/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">备注:</label>
-			<div class="controls">
-				<form:textarea path="remarks" htmlEscape="false" rows="3" maxlength="200" class="input-xlarge"/>
 			</div>
 		</div>
 		<div class="control-group">

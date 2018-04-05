@@ -31,10 +31,10 @@ public class User extends DataEntity<User> {
 	private static final long serialVersionUID = 1L;
 	private Office company;	// 归属群
 	private Office office;	// 归属分群
-	private String loginName;// 登录名
+	private String loginName;// 登陆昵称
 	private String password;// 密码
-	private String no;		// 工号
-	private String name;	// 姓名
+	private String no;		// 共修号
+	private String name;	// 法名
 	private String email;	// 邮箱
 	private String phone;	// 电话
 	private String mobile;	// 手机
@@ -44,7 +44,7 @@ public class User extends DataEntity<User> {
 	private String loginFlag;	// 是否允许登陆
 	private String photo;	// 头像
 
-	private String oldLoginName;// 原登录名
+	private String oldLoginName;// 原登陆昵称
 	private String newPassword;	// 新密码
 	
 	private String oldLoginIp;	// 上次登陆IP
@@ -120,8 +120,8 @@ public class User extends DataEntity<User> {
 		this.office = office;
 	}
 
-	@Length(min=1, max=100, message="登录名长度必须介于 1 和 100 之间")
-	@ExcelField(title="登录名", align=2, sort=30)
+	@Length(min=1, max=100, message="登陆昵称长度必须介于 1 和 100 之间")
+	@ExcelField(title="登陆昵称", align=2, sort=30)
 	public String getLoginName() {
 		return loginName;
 	}
@@ -140,14 +140,14 @@ public class User extends DataEntity<User> {
 		this.password = password;
 	}
 
-	@Length(min=1, max=100, message="姓名长度必须介于 1 和 100 之间")
-	@ExcelField(title="姓名", align=2, sort=40)
+	@Length(min=1, max=100, message="法名长度必须介于 1 和 100 之间")
+	@ExcelField(title="法名", align=2, sort=40)
 	public String getName() {
 		return name;
 	}
 	
-	@Length(min=1, max=100, message="工号长度必须介于 1 和 100 之间")
-	@ExcelField(title="工号", align=2, sort=45)
+	@Length(min=1, max=100, message="共修号长度必须介于 1 和 100 之间")
+	@ExcelField(title="共修号", align=2, sort=45)
 	public String getNo() {
 		return no;
 	}
@@ -191,7 +191,7 @@ public class User extends DataEntity<User> {
 		this.mobile = mobile;
 	}
 
-	@ExcelField(title="备注", align=1, sort=900)
+	@ExcelField(title="姓名", align=1, sort=46)
 	public String getRemarks() {
 		return remarks;
 	}

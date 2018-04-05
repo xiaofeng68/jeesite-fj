@@ -49,11 +49,12 @@
 		<ul class="ul-form">
 			<li><label>归属群：</label><sys:treeselect id="company" name="company.id" value="${user.company.id}" labelName="company.name" labelValue="${user.company.name}" 
 				title="群" url="/sys/office/treeData?type=1" cssClass="input-small" allowClear="true"/></li>
-			<li><label>登录名：</label><form:input path="loginName" htmlEscape="false" maxlength="50" class="input-medium"/></li>
+			<li><label>共修号：</label><form:input path="no" htmlEscape="false" maxlength="50" class="input-medium"/></li>
+			<li><label>登陆昵称：</label><form:input path="loginName" htmlEscape="false" maxlength="50" class="input-medium"/></li>
 			<li class="clearfix"></li>
 			<li><label>归属分群：</label><sys:treeselect id="office" name="office.id" value="${user.office.id}" labelName="office.name" labelValue="${user.office.name}" 
 				title="分群" url="/sys/office/treeData?type=2" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/></li>
-			<li><label>姓&nbsp;&nbsp;&nbsp;名：</label><form:input path="name" htmlEscape="false" maxlength="50" class="input-medium"/></li>
+			<li><label>法&nbsp;&nbsp;&nbsp;名：</label><form:input path="name" htmlEscape="false" maxlength="50" class="input-medium"/></li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询" onclick="return page();"/>
 				<input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
 				<input id="btnImport" class="btn btn-primary" type="button" value="导入"/></li>
@@ -62,17 +63,21 @@
 	</form:form>
 	<sys:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
-		<thead><tr><th>归属群</th><th>归属分群</th><th class="sort-column login_name">登录名</th><th class="sort-column name">姓名</th><th>电话</th><th>手机</th><%--<th>角色</th> --%><shiro:hasPermission name="sys:user:edit"><th>操作</th></shiro:hasPermission></tr></thead>
+		<thead><tr><th>序号</th><th>归属群</th><th>归属分群</th><th class="sort-column no">共修号</th><th class="sort-column login_name">登陆昵称</th><th class="sort-column name">法名</th><th class="sort-column remarks">姓名</th><th>电话</th><th>手机</th><%--<th>角色</th> --%><shiro:hasPermission name="sys:user:edit"><th>操作</th></shiro:hasPermission></tr></thead>
 		<tbody>
-		<c:forEach items="${page.list}" var="user">
+		<c:forEach items="${page.list}" var="user" varStatus="num">
 			<tr>
+				<td>${num.index+1}</td>
 				<td>${user.company.name}</td>
 				<td>${user.office.name}</td>
+				<td>${user.no}</td>
 				<td><a href="${ctx}/sys/user/form?id=${user.id}">${user.loginName}</a></td>
 				<td>${user.name}</td>
+				<td>${user.remarks}</td>
 				<td>${user.phone}</td>
-				<td>${user.mobile}</td><%--
-				<td>${user.roleNames}</td> --%>
+				<td>${user.mobile}</td>
+				<%--
+				<%--<td>${user.roleNames}</td> --%>
 				<shiro:hasPermission name="sys:user:edit"><td>
     				<a href="${ctx}/sys/user/form?id=${user.id}">修改</a>
 					<a href="${ctx}/sys/user/delete?id=${user.id}" onclick="return confirmx('确认要删除该用户吗？', this.href)">删除</a>

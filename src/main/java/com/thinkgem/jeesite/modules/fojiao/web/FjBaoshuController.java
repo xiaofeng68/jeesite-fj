@@ -34,6 +34,7 @@ import com.thinkgem.jeesite.modules.fojiao.entity.FjBaoshu;
 import com.thinkgem.jeesite.modules.fojiao.service.FjBaoshuService;
 import com.thinkgem.jeesite.modules.sys.entity.Dict;
 import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.service.SystemService;
 import com.thinkgem.jeesite.modules.sys.utils.DictUtils;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
@@ -45,7 +46,8 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 @Controller
 @RequestMapping(value = "${adminPath}/fojiao/fjBaoshu")
 public class FjBaoshuController extends BaseController {
-
+	@Autowired
+	private SystemService systemService;
 	@Autowired
 	private FjBaoshuService fjBaoshuService;
 	
@@ -75,7 +77,6 @@ public class FjBaoshuController extends BaseController {
 		Date date = DateUtils.getBegainAndEndDate(now, "week")[0];
 		model.addAttribute("minDate", DateUtils.formatDate(date));
 		model.addAttribute("maxDate", DateUtils.formatDate(now));
-		
 		model.addAttribute("list", fjBaoshuService.getUserBaoshu(fjBaoshu));
 		return "modules/fojiao/fjBaoshuList";
 	}
@@ -89,6 +90,8 @@ public class FjBaoshuController extends BaseController {
 		if(StringUtils.isEmpty(fjBaoshu.getEndDate())) {
 			fjBaoshu.setEndDate(today);
 		}
+		model.addAttribute("startDate",fjBaoshu.getStartDate());
+		model.addAttribute("endDate",fjBaoshu.getEndDate());
 		model.addAttribute("today",today);
 		model.addAttribute("list", fjBaoshuService.getUserStatics(fjBaoshu));
 		return "modules/fojiao/fjUserList";
@@ -158,7 +161,15 @@ public class FjBaoshuController extends BaseController {
 		if (!beanValidator(model, fjBaoshu)){
 			return form(fjBaoshu, model);
 		}
+		User user =	systemService.getUser(fjBaoshu.getCreateBy().getId());
+		fjBaoshu.setCreateBy(user);
 		fjBaoshuService.saveBatch(fjBaoshu,baoshuNum);
+		if(user!=null) {
+			redirectAttributes.addAttribute("createBy.id", user.getId());
+			redirectAttributes.addAttribute("createBy.name", user.getName());
+			redirectAttributes.addAttribute("createBy.loginName", user.getLoginName());
+		}
+		redirectAttributes.addAttribute("createDate",DateUtils.formatDate(fjBaoshu.getCreateDate()));
 		addMessage(redirectAttributes, "保存报数成功");
 		return "redirect:"+Global.getAdminPath()+"/fojiao/fjBaoshu/?repage";
 	}

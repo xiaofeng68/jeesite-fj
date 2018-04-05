@@ -70,9 +70,9 @@
   </table>
 </div>
 <div class="web_index">
-  <table cellpadding="0" cellspacing="0" border="0" width="1100">
+  <table cellpadding="0" cellspacing="0" border="0" style="margin-right: 15%;">
     <tr>
-      <td width="650"></td>
+      <td></td>
 	  <td width="354" valign="top">
 	   <form id="loginForm" action="${ctx}/login" method="post">
 	  	    <table border="0" cellpadding="0" cellspacing="0" id="login">

@@ -97,7 +97,8 @@
 	</delete>
 	<select id="getBaoshuTj" resultType="java.util.Map">
 		select d.label,d.value,t.* from fj_baoshu_tj t right join sys_dict d  on t.protype = d.value  and t.create_by=#{userId}
-		where d.type='PROTYPE' 
+		where d.type='PROTYPE' and d.del_flag!=1 
+		order by d.sort
 	</select>
 	<!-- 查询时间段内的用户统计 -->
 	<select id="getBaoShuByTime" resultType="java.util.Map">
@@ -172,6 +173,7 @@
 			</if>
 		</where>
 		GROUP BY protype
-		) t2 where t1.value = t2.protype and t1.type ='PROTYPE'
+		) t2 where t1.value = t2.protype and t1.type ='PROTYPE' and t.del_flag!=1 
+		order by t.sort
 	</select>
 </mapper>
