@@ -34,6 +34,7 @@ import com.thinkgem.jeesite.modules.fojiao.entity.FjBaoshu;
 import com.thinkgem.jeesite.modules.fojiao.service.FjBaoshuService;
 import com.thinkgem.jeesite.modules.sys.entity.Dict;
 import com.thinkgem.jeesite.modules.sys.entity.User;
+import com.thinkgem.jeesite.modules.sys.service.OfficeService;
 import com.thinkgem.jeesite.modules.sys.service.SystemService;
 import com.thinkgem.jeesite.modules.sys.utils.DictUtils;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
@@ -48,6 +49,8 @@ import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 public class FjBaoshuController extends BaseController {
 	@Autowired
 	private SystemService systemService;
+	@Autowired
+	private OfficeService officeService;
 	@Autowired
 	private FjBaoshuService fjBaoshuService;
 	
@@ -126,7 +129,12 @@ public class FjBaoshuController extends BaseController {
 			fjBaoshu.setStartDate(DateUtils.formatDate(dates[0]));
 			fjBaoshu.setEndDate(DateUtils.formatDate(dates[1]));
 		}
-		
+		if(fjBaoshu.getCreateBy()!=null && fjBaoshu.getCreateBy().getOffice()!=null) {
+		String officeId = fjBaoshu.getCreateBy().getOffice().getId();
+		if(!StringUtils.isEmpty(officeId)) {
+			fjBaoshu.getCreateBy().setOffice(officeService.get(officeId));
+		}
+		}
 		model.addAttribute("list", fjBaoshuService.getClassStatics(fjBaoshu));
 		return "modules/fojiao/fjBaoshuClassStatic";
 	}

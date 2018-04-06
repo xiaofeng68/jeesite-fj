@@ -18,6 +18,9 @@
 		<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<tr>
 			<td colspan="2">
+				<label>归属群：</label>
+				<sys:treeselect id="company" name="createBy.office.id" value="${fjBaoshu.createBy.office.id}" labelName="company.name" labelValue="${fjBaoshu.createBy.office.name}" 
+				title="群" url="/sys/office/treeData?type=2" cssClass="input-small" allowClear="true"/>
 				<label>开始日期：</label>
 				<input id="startDate" name="startDate" type="text"
 						readonly="readonly" maxlength="20" class="input-xlarge Wdate"

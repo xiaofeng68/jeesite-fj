@@ -84,7 +84,7 @@
 		</tr>
 		<tr>
 			<td><label class="control-label">共修编号：</label></td>
-			<td><label class="control-label" id="userLogin">${fjBaoshu.createBy.loginName }</label></td>
+			<td><label class="control-label" id="userLogin">${fjBaoshu.createBy.no }</label></td>
 			<td><label class="control-label">共修编号：</label></td>
 			<td><label class="control-label" id="daixiuLogin">${fjBaoshu.createBy.daixiu.loginName }</label></td>
 		</tr>

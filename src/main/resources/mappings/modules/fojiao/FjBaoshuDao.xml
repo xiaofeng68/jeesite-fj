@@ -137,6 +137,9 @@
 		<if test="endDate!=null and endDate!=''">
 			and create_date &lt;= #{endDate}
 		</if>
+		<if test="createBy!=null and createBy.office != null and createBy.office.id != null and createBy.office.id != ''">
+			and office_id = #{createBy.office.id }
+		</if>
 		group by office_id
 		) y
 		) t2, sys_office t3
