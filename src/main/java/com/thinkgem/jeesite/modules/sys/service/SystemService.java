@@ -30,6 +30,7 @@ import com.thinkgem.jeesite.modules.sys.entity.Office;
 import com.thinkgem.jeesite.modules.sys.entity.Role;
 import com.thinkgem.jeesite.modules.sys.entity.User;
 import com.thinkgem.jeesite.modules.sys.security.SystemAuthorizingRealm;
+import com.thinkgem.jeesite.modules.sys.utils.BaoShuUtils;
 import com.thinkgem.jeesite.modules.sys.utils.LogUtils;
 import com.thinkgem.jeesite.modules.sys.utils.UserUtils;
 
@@ -146,6 +147,9 @@ public class SystemService extends BaseService  {
 			}else{
 				throw new ServiceException(user.getLoginName() + "没有设置角色！");
 			}
+			//更新报数关系
+			BaoShuUtils.updateUser(user);
+			
 			// 将当前用户同步到Activiti
 			//saveActivitiUser(user);
 			// 清除用户缓存

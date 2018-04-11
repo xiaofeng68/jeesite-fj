@@ -47,4 +47,8 @@ public class BaoShuUtils {
 		}
 		return map;
 	}
+	public static void updateUser(User user) {
+		baoshuDao.updateBaoshuOffice(user);
+		baoshuDao.updateBaoshuTjOffice(user);
+	}
 }

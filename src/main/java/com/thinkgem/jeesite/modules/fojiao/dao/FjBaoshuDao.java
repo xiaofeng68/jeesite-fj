@@ -10,6 +10,7 @@ import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.thinkgem.jeesite.modules.fojiao.entity.FjBaoshu;
 import com.thinkgem.jeesite.modules.sys.entity.Office;
+import com.thinkgem.jeesite.modules.sys.entity.User;
 
 /**
  * 报数统计DAO接口
@@ -78,4 +79,7 @@ public interface FjBaoshuDao extends CrudDao<FjBaoshu> {
 	 * @return
 	 */
 	List<Map<String,Object>> findPeopleData(FjBaoshu fjBaoshu );
+	
+	void updateBaoshuOffice(User user);
+	void updateBaoshuTjOffice(User user);
 }
