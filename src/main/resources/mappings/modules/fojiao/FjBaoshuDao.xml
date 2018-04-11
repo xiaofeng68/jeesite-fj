@@ -96,7 +96,7 @@
 		delete from fj_baoshu where create_by=#{0} and create_date like CONCAT('%', #{1}, '%')  
 	</delete>
 	<select id="getBaoshuTj" resultType="java.util.Map">
-		select d.label,d.value,t.* from fj_baoshu_tj t right join sys_dict d  on t.protype = d.value  and t.create_by=#{userId} and t.office_id=#{officeId}
+		select d.label,d.value,t.* from fj_baoshu_tj t right join sys_dict d  on t.protype = d.value  and t.create_by=#{userId} 
 		where d.type='PROTYPE' and d.del_flag!=1 
 		order by d.sort
 	</select>
@@ -106,7 +106,6 @@
 		<where>
 		and create_date like #{today}"%"
 		and create_by =#{userId}
-		and office_id=#{officeId}
 		</where>
 		group by protype 
 	</select>

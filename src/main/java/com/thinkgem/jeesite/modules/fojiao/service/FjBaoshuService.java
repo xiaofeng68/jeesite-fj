@@ -129,7 +129,6 @@ public class FjBaoshuService extends CrudService<FjBaoshuDao, FjBaoshu> {
 		User user = fjBaoshu.getCreateBy()!=null?fjBaoshu.getCreateBy():UserUtils.getUser();
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("userId", user.getId());
-		param.put("officeId", user.getOffice().getId());
 		List<Map<String, Object>> list = baoshuDao.getBaoshuTj(param);
 		param.put("today", DateUtils.formatDate(fjBaoshu.getCreateDate()));
 		Map<String, Object> dayMap = change2Map(baoshuDao.getBaoShuByTime(param));
