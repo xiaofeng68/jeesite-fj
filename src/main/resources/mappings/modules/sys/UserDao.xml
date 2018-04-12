@@ -204,7 +204,7 @@
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
-				ORDER BY c.code, o.code, a.name
+				ORDER BY  c.code, o.code,CAST(a.no as SIGNED), a.name
 			</otherwise>
 		</choose>
 	</select>

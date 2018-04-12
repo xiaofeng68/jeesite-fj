@@ -125,7 +125,7 @@
 	<!-- 班级统计 -->
 	<select id="getClassStatics" resultType="java.util.Map">
 		select t3.name,t1.office_id,t1.allnums,t2.nums,t1.allnums-t2.nums mnums from (
-		select office_id,count(1) allnums from sys_user group by office_id
+		select office_id,count(1) allnums from sys_user where del_flag!=1 group by office_id
 		) t1,
 		(
 		select office_id,count(1) nums from (
@@ -156,7 +156,7 @@
 		)
 	</select>
 	<select id="getUserStatics" resultType="java.util.Map">
-		select t1.login_name,t1.name,t2.*  from sys_user t1,(
+		select t1.no,t1.login_name,t1.name,t2.*  from sys_user t1,(
 		select create_by,protype,sum(num) num from fj_baoshu 
 		<where>
 			<if test="startDate!=null and startDate!=''">
@@ -168,6 +168,7 @@
 		</where>
 		GROUP BY create_by,protype
 		) t2 where t1.id = t2.create_by
+		ORDER BY CAST(t1.no as SIGNED)
 	</select>
 	<select id="findPeopleData" resultType="java.util.Map">
 		SELECT t1.label,t2.protype,t2.nums from sys_dict t1,(
