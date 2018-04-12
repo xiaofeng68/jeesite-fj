@@ -16,16 +16,28 @@
 			}
 		});
 		$(".sort-column").click(function(){
-			var order = $(this).attr("class").split(" ");
-			var sort = $("#${id}").val().split(" ");
-			for(var i=0; i<order.length; i++){
-				if (order[i] == "sort-column"){order = order[i+1]; break;}
-			}
-			if (order == sort[0]){
-				sort = (sort[1]&&sort[1].toUpperCase()=="DESC"?"ASC":"DESC");
-				$("#${id}").val(order+" DESC"!=order+" "+sort?"":order+" "+sort);
+			var index = $(this).attr("class").indexOf("special");
+			if(index==-1){
+				var order = $(this).attr("class").split(" ");
+				var sort = $("#${id}").val().split(" ");
+				for(var i=0; i<order.length; i++){
+					if (order[i] == "sort-column"){order = order[i+1]; break;}
+				}
+				if (order == sort[0]){
+					sort = (sort[1]&&sort[1].toUpperCase()=="DESC"?"ASC":"DESC");
+					$("#${id}").val(order+" DESC"!=order+" "+sort?"":order+" "+sort);
+				}else{
+					$("#${id}").val(order+" ASC");
+				}
 			}else{
-				$("#${id}").val(order+" ASC");
+				var isDesc = $("#${id}").val().toUpperCase().indexOf("ASC")!=-1;
+				var order = $(this).attr("class").substring(index+7);
+				alert(isDesc);
+				if(isDesc){
+					$("#${id}").val(order+" DESC");
+				}else{
+					$("#${id}").val(order+" ASC");
+				}
 			}
 			${callback}
 		});

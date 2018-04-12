@@ -61,9 +61,9 @@
 				<td style="text-align: center;" colspan="3">合计</td>
 				</c:when>
 				<c:otherwise>
+				<td>${data.no }</td>
+				<td>${data.name }</td>
 				<td>${data.login_name }</td>
-				<td>${data.name }</td>
-				<td>${data.name }</td>
 				</c:otherwise>
 			</c:choose>
 			<c:forEach items="${fns:getDictList('PROTYPE')}" var="type">

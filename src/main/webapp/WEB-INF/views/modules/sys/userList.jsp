@@ -63,7 +63,7 @@
 	</form:form>
 	<sys:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
-		<thead><tr><th>序号</th><th>归属群</th><th>归属分群</th><th class="sort-column no">共修号</th><th class="sort-column login_name">登陆昵称</th><th class="sort-column name">法名</th><th class="sort-column remarks">姓名</th><th>电话</th><th>手机</th><%--<th>角色</th> --%><shiro:hasPermission name="sys:user:edit"><th>操作</th></shiro:hasPermission></tr></thead>
+		<thead><tr><th>序号</th><th>归属群</th><th>归属分群</th><th class="sort-column special CAST(a.no as SIGNED)">共修号</th><th class="sort-column login_name">登陆昵称</th><th class="sort-column name">法名</th><th class="sort-column remarks">姓名</th><th>电话</th><th>手机</th><%--<th>角色</th> --%><shiro:hasPermission name="sys:user:edit"><th>操作</th></shiro:hasPermission></tr></thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="user" varStatus="num">
 			<tr>
