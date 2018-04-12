@@ -151,6 +151,7 @@ public class FjBaoshuService extends CrudService<FjBaoshuDao, FjBaoshu> {
 			obj = cahceMap.get(key);
 			if(obj==null) {
 				obj = new HashMap<String, Object>();
+				obj.put("no", map.get("no"));
 				obj.put("login_name", map.get("login_name"));
 				obj.put("name", map.get("name"));
 				obj.put("create_by", key);
