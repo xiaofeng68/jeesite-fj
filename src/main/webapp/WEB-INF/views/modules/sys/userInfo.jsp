@@ -67,7 +67,7 @@
 		<div class="control-group">
 			<label class="control-label">姓名:</label>
 			<div class="controls">
-				<form:input path="remarks" htmlEscape="false" maxlength="50" readonly="true"/>
+				<form:input path="remarks" htmlEscape="false" maxlength="50" />
 			</div>
 		</div>
 		<div class="control-group">
