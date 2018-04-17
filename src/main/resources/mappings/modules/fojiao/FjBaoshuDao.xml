@@ -156,7 +156,7 @@
 		)
 	</select>
 	<select id="getUserStatics" resultType="java.util.Map">
-		select t1.no,t1.login_name,t1.remarks name,t2.*  from sys_user t1,(
+		select t1.no,t1.login_name,t1.name name,t2.*  from sys_user t1,(
 		select create_by,protype,sum(num) num from fj_baoshu 
 		<where>
 			<if test="startDate!=null and startDate!=''">

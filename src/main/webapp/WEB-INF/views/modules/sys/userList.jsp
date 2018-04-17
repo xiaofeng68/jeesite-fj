@@ -54,7 +54,7 @@
 			<li class="clearfix"></li>
 			<li><label>归属分群：</label><sys:treeselect id="office" name="office.id" value="${user.office.id}" labelName="office.name" labelValue="${user.office.name}" 
 				title="分群" url="/sys/office/treeData?type=2" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/></li>
-			<li><label>法&nbsp;&nbsp;&nbsp;名：</label><form:input path="name" htmlEscape="false" maxlength="50" class="input-medium"/></li>
+			<li><label>法&nbsp;&nbsp;&nbsp;号：</label><form:input path="name" htmlEscape="false" maxlength="50" class="input-medium"/></li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询" onclick="return page();"/>
 				<input id="btnExport" class="btn btn-primary" type="button" value="导出"/>
 				<input id="btnImport" class="btn btn-primary" type="button" value="导入"/></li>
@@ -63,7 +63,7 @@
 	</form:form>
 	<sys:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
-		<thead><tr><th>序号</th><th>归属群</th><th>归属分群</th><th class="sort-column special CAST(a.no as SIGNED)">共修号</th><th class="sort-column login_name">登陆昵称</th><th class="sort-column name">法名</th><th class="sort-column remarks">姓名</th><th>电话</th><th>手机</th><%--<th>角色</th> --%><shiro:hasPermission name="sys:user:edit"><th>操作</th></shiro:hasPermission></tr></thead>
+		<thead><tr><th>序号</th><th>归属群</th><th>归属分群</th><th class="sort-column special CAST(a.no as SIGNED)">共修号</th><th class="sort-column login_name">登陆昵称</th><th class="sort-column name">法号</th><th class="sort-column remarks">姓名</th><th>电话</th><th>手机</th><%--<th>角色</th> --%><shiro:hasPermission name="sys:user:edit"><th>操作</th></shiro:hasPermission></tr></thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="user" varStatus="num">
 			<tr>

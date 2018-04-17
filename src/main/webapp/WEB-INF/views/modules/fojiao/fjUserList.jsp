@@ -46,7 +46,7 @@
 		<thead>
 			<tr>
 				<th>共修编号</th>
-				<th>共修昵称</th>
+				<th>法号</th>
 				<th>登陆名</th>
 				<c:forEach items="${fns:getDictList('PROTYPE')}" var="type">
 					<th>${type.label }</th>
