@@ -261,7 +261,7 @@ public class FjBaoshuController extends BaseController {
 			String fileName = "用户统计.xlsx";
 	    	List<String> headerList = Lists.newArrayList();
 	    	headerList.add("共修编号");
-	    	headerList.add("共修昵称");
+	    	headerList.add("法号");
 	    	headerList.add("登陆名");
 			for (Dict dic : dicList) {
 				headerList.add(dic.getLabel());

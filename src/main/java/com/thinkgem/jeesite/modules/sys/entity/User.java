@@ -34,7 +34,7 @@ public class User extends DataEntity<User> {
 	private String loginName;// 登陆昵称
 	private String password;// 密码
 	private String no;		// 共修号
-	private String name;	// 法名
+	private String name;	// 法号
 	private String email;	// 邮箱
 	private String phone;	// 电话
 	private String mobile;	// 手机
@@ -140,8 +140,8 @@ public class User extends DataEntity<User> {
 		this.password = password;
 	}
 
-	@Length(min=1, max=100, message="法名长度必须介于 1 和 100 之间")
-	@ExcelField(title="法名", align=2, sort=40)
+	@Length(min=1, max=100, message="法号长度必须介于 1 和 100 之间")
+	@ExcelField(title="法号", align=2, sort=40)
 	public String getName() {
 		return name;
 	}
