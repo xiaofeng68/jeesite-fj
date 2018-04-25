@@ -62,11 +62,10 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="javascript:void(0);"><shiro:hasPermission
+		<li class="active"><a href="${ctx}/fojiao/fjBaoshu"><shiro:hasPermission
 					name="fojiao:fjBaoshu:edit">${not empty fjBaoshu.id?'修改':'提交'}</shiro:hasPermission>
 				<shiro:lacksPermission name="fojiao:fjBaoshu:edit">查看</shiro:lacksPermission>报数</a></li>
 	</ul>
-	<br />
 	<form:form id="inputForm" modelAttribute="fjBaoshu"
 		action="${ctx}/fojiao/fjBaoshu/save" method="post"
 		class="form-horizontal" onsubmit="return initBaoshu();">

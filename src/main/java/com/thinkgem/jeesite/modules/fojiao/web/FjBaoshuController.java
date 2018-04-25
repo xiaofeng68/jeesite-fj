@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.management.RuntimeErrorException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.common.collect.Lists;
-import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.utils.DateUtils;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.common.utils.excel.ExportExcel;
@@ -77,8 +77,17 @@ public class FjBaoshuController extends BaseController {
 		}
 		model.addAttribute("today",DateUtils.formatDate(fjBaoshu.getCreateDate()));
 		Date now = new Date();
-		Date date = DateUtils.getBegainAndEndDate(now, "week")[0];
-		model.addAttribute("minDate", DateUtils.formatDate(date));
+		Calendar calendar = Calendar.getInstance();
+        calendar.setTime(now);
+		calendar.setFirstDayOfWeek(Calendar.SUNDAY);
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        
+		
+		model.addAttribute("minDate", DateUtils.formatDate(calendar.getTime()));
 		model.addAttribute("maxDate", DateUtils.formatDate(now));
 		model.addAttribute("list", fjBaoshuService.getUserBaoshu(fjBaoshu));
 		return "modules/fojiao/fjBaoshuList";
@@ -169,8 +178,8 @@ public class FjBaoshuController extends BaseController {
 	}
 
 	@RequiresPermissions("fojiao:fjBaoshu:edit")
-	@RequestMapping(value = "save")
-	public String save(FjBaoshu fjBaoshu,String baoshuNum, Model model, RedirectAttributes redirectAttributes) {
+    @RequestMapping(value = "save", method=RequestMethod.POST)
+    public String save(FjBaoshu fjBaoshu, String baoshuNum, Model model,HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, fjBaoshu)){
 			return form(fjBaoshu, model);
 		}
@@ -183,8 +192,8 @@ public class FjBaoshuController extends BaseController {
 			redirectAttributes.addAttribute("createBy.loginName", user.getLoginName());
 		}
 		redirectAttributes.addAttribute("createDate",DateUtils.formatDate(fjBaoshu.getCreateDate()));
-		addMessage(redirectAttributes, "保存报数成功");
-		return "redirect:"+Global.getAdminPath()+"/fojiao/fjBaoshu/?repage";
+		addMessage(redirectAttributes, "报数成功，随喜您的功德");
+		return "redirect:"+adminPath+"/fojiao/fjBaoshu/list?repage";
 	}
 	
 	@RequiresPermissions("fojiao:fjBaoshu:edit")
@@ -192,9 +201,9 @@ public class FjBaoshuController extends BaseController {
 	public String delete(FjBaoshu fjBaoshu, RedirectAttributes redirectAttributes) {
 		fjBaoshuService.delete(fjBaoshu);
 		addMessage(redirectAttributes, "删除报数成功");
-		return "redirect:"+Global.getAdminPath()+"/fojiao/fjBaoshu/?repage";
+		return "redirect:"+adminPath+"/fojiao/fjBaoshu/list?repage";
 	}
-	@RequiresPermissions("sys:user:view")
+	@RequiresPermissions("fojiao:fjBaoshu:view")
     @RequestMapping(value = "export", method=RequestMethod.POST)
     public String exportFile(FjBaoshu fjBaoshu, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
 		try {
@@ -243,7 +252,7 @@ public class FjBaoshuController extends BaseController {
 		} catch (Exception e) {
 			addMessage(redirectAttributes, "导出报数统计！失败信息："+e.getMessage());
 		}
-		return "redirect:" + Global.getAdminPath()+ "/fojiao/fjBaoshuList?repage";
+		return "redirect:"+adminPath+"/fojiao/fjBaoshu/list?repage";
     }
 	@RequiresPermissions("sys:user:view")
     @RequestMapping(value = "exportUserStatiscs", method=RequestMethod.POST)
