@@ -3,4 +3,5 @@ encoding//src/main/java=UTF-8
 encoding//src/main/resources=UTF-8
 encoding//src/main/resources/jeesite.properties=utf-8
 encoding//src/main/webapp/WEB-INF/views/modules/sys/sysIndex.jsp=UTF-8
+encoding//src/test/java=UTF-8
 encoding/<project>=UTF-8

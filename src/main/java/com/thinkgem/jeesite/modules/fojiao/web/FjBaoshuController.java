@@ -74,6 +74,9 @@ public class FjBaoshuController extends BaseController {
 		}
 		if(fjBaoshu.getCreateBy()==null) {
 			fjBaoshu.setCreateBy(UserUtils.getUser());
+		}else{
+		    User user = UserUtils.get(fjBaoshu.getCreateBy().getId());
+		    fjBaoshu.setCreateBy(user);
 		}
 		model.addAttribute("today",DateUtils.formatDate(fjBaoshu.getCreateDate()));
 		Date now = new Date();
@@ -188,8 +191,6 @@ public class FjBaoshuController extends BaseController {
 		fjBaoshuService.saveBatch(fjBaoshu,baoshuNum);
 		if(user!=null) {
 			redirectAttributes.addAttribute("createBy.id", user.getId());
-			redirectAttributes.addAttribute("createBy.name", user.getName());
-			redirectAttributes.addAttribute("createBy.loginName", user.getLoginName());
 		}
 		redirectAttributes.addAttribute("createDate",DateUtils.formatDate(fjBaoshu.getCreateDate()));
 		addMessage(redirectAttributes, "报数成功，随喜您的功德");

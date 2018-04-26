@@ -623,12 +623,13 @@
 			<artifactId>httpmime</artifactId>
 			<version>4.5.3</version>
 		</dependency>
+		
 		<!-- 系统注册码密钥 -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>kid-lesence</groupId>
 			<artifactId>kid-lesence-client</artifactId>
 			<version>${kid.lesence.version}</version>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 
 	<build>

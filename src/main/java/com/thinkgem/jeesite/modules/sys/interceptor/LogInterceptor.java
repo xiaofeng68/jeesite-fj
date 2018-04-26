@@ -10,11 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.NamedThreadLocal;
-import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kidinfor.lesence.RSAUtils;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.service.BaseService;
 import com.thinkgem.jeesite.common.utils.DateUtils;
@@ -48,14 +46,14 @@ public class LogInterceptor extends BaseService implements HandlerInterceptor {
 		}
 		//判断是否包含在菜单权限里
 		if ((url.indexOf("/adminPath/") > -1)) {// 如果要访问的资源是不需要验证的
-		    String target = RSAUtils.decryptByPublicKey(lesenceCode, publicKey);
+		    /*String target = RSAUtils.decryptByPublicKey(lesenceCode, publicKey);
 	        String hasError = RSAUtils.overedTime(target);
 	        if(!StringUtils.isEmpty(hasError)){//验证失败
 	            request.getSession().setAttribute("errorStr", hasError);
 	            request.setAttribute("msg", hasError);
 	            request.getRequestDispatcher("/WEB-INF/views/error/403.jsp").forward(request, response);
 	            return false;
-	        }
+	        }*/
 			return true;
 		}
 		
