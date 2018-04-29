@@ -90,7 +90,7 @@ public class FjBaoshuController extends BaseController {
         calendar.set(Calendar.MILLISECOND, 0);
         
 		
-		model.addAttribute("minDate", DateUtils.formatDate(calendar.getTime()));
+		//model.addAttribute("minDate", DateUtils.formatDate(calendar.getTime()));
 		model.addAttribute("maxDate", DateUtils.formatDate(now));
 		model.addAttribute("list", fjBaoshuService.getUserBaoshu(fjBaoshu));
 		return "modules/fojiao/fjBaoshuList";
