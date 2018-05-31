@@ -28,10 +28,10 @@
          }, function (result) {
              if (result.success) {
                 var user = result.obj;
-                $("#userLogin").html(user.loginName);
+                $("#userLogin").html(user.no);
                 if(user.daixiu){
                 	$("#daixiuName").html(user.daixiu.name);
-                    $("#daixiuLogin").html(user.daixiu.loginName);	
+                    $("#daixiuLogin").html(user.daixiu.no);	
                 }else{
                 	$("#daixiuName").html("");
                     $("#daixiuLogin").html("");	
@@ -85,7 +85,7 @@
 			<td><label class="control-label">共修编号：</label></td>
 			<td><label class="control-label" id="userLogin">${fjBaoshu.createBy.no }</label></td>
 			<td><label class="control-label">共修编号：</label></td>
-			<td><label class="control-label" id="daixiuLogin">${fjBaoshu.createBy.daixiu.loginName }</label></td>
+			<td><label class="control-label" id="daixiuLogin">${fjBaoshu.createBy.daixiu.no }</label></td>
 		</tr>
 		<tr>
 			<td><label class="control-label">报数日期：</label></td>
