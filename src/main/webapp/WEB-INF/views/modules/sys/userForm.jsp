@@ -64,7 +64,7 @@
 		<div class="control-group">
 			<label class="control-label">代修师兄:</label>
 			<div class="controls">
-				<sys:treeselect id="userId" name="createBy.id" value="${user.daixiu.id}" labelName="createBy.name" labelValue="${user.daixiu.name}" 
+				<sys:treeselect id="userId" name="daixiu.id" value="${user.daixiu.id}" labelName="createBy.name" labelValue="${user.daixiu.name}" 
 				title="用户" url="/sys/user/treeData" cssClass="input-small" allowClear="true" notAllowSelectParent="true" />
 			</div>
 		</div>

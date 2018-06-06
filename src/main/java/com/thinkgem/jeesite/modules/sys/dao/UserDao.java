@@ -36,7 +36,11 @@ public interface UserDao extends CrudDao<User> {
 	 * @return
 	 */
 	public long findAllCount(User user);
-	
+	/**   
+	 * @Description: 查找关联用户   
+	 */
+	 
+	public List<User> findSelfList(User user);
 	/**
 	 * 更新用户密码
 	 * @param user

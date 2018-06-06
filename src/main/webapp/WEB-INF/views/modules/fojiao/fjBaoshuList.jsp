@@ -76,7 +76,7 @@
 			<td width="25%"><label class="control-label">共修师兄：</label></td>
 			<td width="25%">
 			<sys:treeselect id="userId" name="createBy.id" value="${fjBaoshu.createBy.id}" labelName="createBy.name" labelValue="${fjBaoshu.createBy.name}" 
-				title="用户" url="/sys/user/treeData" cssClass="input-small" allowClear="true" notAllowSelectParent="true" />
+				title="用户" url="/sys/user/treeData?self=true" cssClass="input-small" allowClear="true" notAllowSelectParent="true" />
 			</td>
 			<td width="25%"><label class="control-label">代修师兄：</label></td>
 			<td width="25%"><label class="control-label" id="daixiuName">${fjBaoshu.createBy.daixiu.name }</label></td>

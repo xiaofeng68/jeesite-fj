@@ -3,6 +3,7 @@
  */
 package com.thinkgem.jeesite.modules.sys.web;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -354,9 +355,13 @@ public class UserController extends BaseController {
 	@RequiresPermissions("user")
 	@ResponseBody
 	@RequestMapping(value = "treeData")
-	public List<Map<String, Object>> treeData(@RequestParam(required=false) String officeId, HttpServletResponse response) {
+	public List<Map<String, Object>> treeData(@RequestParam(required=false) String officeId,@RequestParam(required=false) boolean self, HttpServletResponse response) {
 		List<Map<String, Object>> mapList = Lists.newArrayList();
-		List<User> list = systemService.findUser(new User());
+		User currentUser = UserUtils.getUser();
+		if("1".equals(currentUser.getId())) {
+		    self = false;
+		}
+		List<User> list = self?systemService.findSelfUser(currentUser):systemService.findUser(new User());
 		for (int i=0; i<list.size(); i++){
 			User e = list.get(i);
 			Map<String, Object> map = Maps.newHashMap();

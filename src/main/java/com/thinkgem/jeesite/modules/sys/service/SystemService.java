@@ -3,6 +3,7 @@
  */
 package com.thinkgem.jeesite.modules.sys.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -106,6 +107,16 @@ public class SystemService extends BaseService  {
 		List<User> list = userDao.findList(user);
 		return list;
 	}
+	public List<User> findSelfUser(User user){
+        // 生成数据权限过滤条件（dsf为dataScopeFilter的简写，在xml中使用 ${sqlMap.dsf}调用权限SQL）
+        List<User> list = userDao.findSelfList(user);
+        if(list==null) {
+            list = new ArrayList<User>();
+        }
+        list.add(0, user);
+        return list;
+    }
+	
 
 	/**
 	 * 通过部门ID获取用户列表，仅返回用户id和name（树查询用户时用）

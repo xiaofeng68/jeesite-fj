@@ -152,7 +152,18 @@
 		LEFT JOIN sys_role_office ro ON ro.role_id = r.id -->
 		WHERE a.login_name = #{loginName} AND a.del_flag = #{DEL_FLAG_NORMAL}
 	</select>
-	
+	<select id="findSelfList" resultType="User">
+		SELECT
+			<include refid="userColumns"/>
+		FROM sys_user a 
+		<include refid="userJoins"/>
+		<if test="role != null and role.id != null and role.id != ''">
+			JOIN sys_user_role ur ON ur.user_id = a.id AND ur.role_id = #{role.id}
+		</if>
+		<where>
+			and a.daixiu = #{id}
+		</where>
+	</select>
 	<!-- 分页查询用户信息 -->
 	<select id="findList" resultType="User">
 		SELECT
